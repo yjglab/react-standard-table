@@ -1,27 +1,31 @@
 import { FC, useEffect, useState } from "react";
 import { cn } from "../../utils/cn";
-import { ChevronDown } from "lucide-react";
+import { Check, ChevronDown } from "lucide-react";
 import { iconStyle } from "../../configs/style";
 
 interface Props {
   countPerPage: number;
   counts?: number[];
   defaultValue?: number;
+  className?: string;
 }
 const RowCountSelector: FC<Props> = ({
   countPerPage,
   counts = [10, 25, 50],
   defaultValue = countPerPage,
+  className = "",
 }) => {
   const [selected, setSelected] = useState(defaultValue);
-  const [triggered, setTriggered] = useState(true);
+  const [triggered, setTriggered] = useState(false);
 
-  useEffect(() => {}, [selected]);
+  useEffect(() => {
+    setTriggered(false);
+  }, [selected]);
 
   return (
     <div
       onMouseLeave={() => setTriggered(false)}
-      className={cn("relative text-center max-w-16 text-sm")}
+      className={cn("relative max-w-16 text-sm", className)}
     >
       <button
         onMouseOver={() => setTriggered(true)}
@@ -40,8 +44,8 @@ const RowCountSelector: FC<Props> = ({
       </button>
       <div
         className={cn(
-          "absolute min-w-24 left-0 opacity-0",
-          "transition-all duration-200",
+          "absolute min-w-24 opacity-0",
+          "transition-all duration-200 right-0",
           triggered && "opacity-100"
         )}
       >
@@ -49,10 +53,19 @@ const RowCountSelector: FC<Props> = ({
           {counts.map((countValue) => (
             <button
               key={countValue}
+              disabled={!triggered}
               onClick={() => setSelected(countValue)}
-              className={cn("py-0.5", "hover:bg-slate-100 rounded-md")}
+              className={cn(
+                "flex items-center w-full px-2.5 justify-between py-0.5 text-left hover:bg-slate-100 rounded-md"
+              )}
             >
-              {countValue}
+              <span>{countValue}</span>
+              {selected === countValue && (
+                <Check
+                  size={iconStyle.size}
+                  strokeWidth={iconStyle.strokeWidth}
+                />
+              )}
             </button>
           ))}
         </div>

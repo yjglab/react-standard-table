@@ -1,12 +1,20 @@
 import { FC } from "react";
-import RowCountSelector from "../selector/RowCountSelector";
-interface Props {}
+import TableOption from "./TableOption";
+import { cn } from "../../utils/cn";
+import TableHead from "./TableHead";
+import TableBody from "./TableBody";
 
-const TableContainer: FC<Props> = ({}) => {
+interface Props {
+  className?: string;
+}
+
+const TableContainer: FC<Props> = ({ className = "" }) => {
   return (
-    <>
-      <RowCountSelector countPerPage={10} />
-    </>
+    <div className={cn("w-full h-full bg-cyan-100", className)}>
+      <TableOption />
+      <TableHead />
+      <TableBody />
+    </div>
   );
 };
 export default TableContainer;
