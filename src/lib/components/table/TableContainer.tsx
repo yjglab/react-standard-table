@@ -1,6 +1,7 @@
 import { FC } from "react";
-import RowCountSelector from "./RowCountSelector";
+import RowCountSelector from "../selector/RowCountSelector";
 interface Props {}
+
 const TableContainer: FC<Props> = ({}) => {
   return (
     <>
