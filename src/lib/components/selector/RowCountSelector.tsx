@@ -37,7 +37,7 @@ const RowCountSelector: FC<Props> = ({
           strokeWidth={iconStyle.strokeWidth}
           className={cn(
             "transition-all",
-            triggered ? "transform rotate-180" : ""
+            triggered ? "transform rotate-180 will-change-transform" : ""
           )}
         />
         <span>{selected}</span>
