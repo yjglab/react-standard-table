@@ -49,14 +49,14 @@ const RowCountSelector: FC<Props> = ({
           triggered && "opacity-100"
         )}
       >
-        <div className="w-full h-full flex flex-col space-y-1 py-1 relative top-1 bg-white rounded-md px-1 ">
+        <div className="w-full h-full shadow-md ring-1 ring-slate-50 flex flex-col space-y-1 py-1 relative top-1 bg-white rounded-md px-1 ">
           {counts.map((countValue) => (
             <button
               key={countValue}
               disabled={!triggered}
               onClick={() => setSelected(countValue)}
               className={cn(
-                "flex items-center w-full px-2.5 justify-between py-0.5 text-left hover:bg-slate-100 rounded-md"
+                "flex items-center w-full px-2.5 justify-between py-1.5 text-left hover:bg-slate-100 rounded-md"
               )}
             >
               <span>{countValue}</span>

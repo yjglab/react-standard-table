@@ -1,14 +1,14 @@
-import { FC } from "react";
+import { FC, ReactNode } from "react";
 import { cn } from "../../utils/cn";
-import HeadItem from "./HeadItem";
 
-type HeadItem = { label: string; width: number };
+type HeadItem = { content: string | ReactNode; width?: number };
 
 interface Props {
   items: HeadItem[];
   className?: string;
+  itemAlign?: "left" | "center" | "right";
 }
-const TableHead: FC<Props> = ({ items, className }) => {
+const TableHead: FC<Props> = ({ items, className, itemAlign = "left" }) => {
   return (
     <div
       className={cn(
@@ -17,7 +17,17 @@ const TableHead: FC<Props> = ({ items, className }) => {
       )}
     >
       {items.map((item: any) => (
-        <HeadItem key={item.label} item={item} />
+        <div
+          key={item.content}
+          className={cn(
+            `md:w-[${item.width || Math.floor(100 / items.length)}%]`,
+            itemAlign === "left" && "text-left",
+            itemAlign === "center" && "text-center",
+            itemAlign === "right" && "text-right"
+          )}
+        >
+          {item.content}
+        </div>
       ))}
     </div>
   );
