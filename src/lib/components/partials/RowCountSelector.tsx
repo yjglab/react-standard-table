@@ -4,20 +4,26 @@ import { Check, ChevronDown } from "lucide-react";
 import { iconStyle } from "../../configs/style";
 
 interface Props {
-  countPerPage: number;
+  rowsPerPage: number;
+  handleRowsPerPage: (rows: number) => void;
   counts?: number[];
   defaultValue?: number;
   className?: string;
 }
 const RowCountSelector: FC<Props> = ({
-  countPerPage,
+  rowsPerPage,
+  handleRowsPerPage,
   counts = [10, 25, 50],
-  defaultValue = countPerPage,
+  defaultValue = rowsPerPage,
   className = "",
 }) => {
   const [selected, setSelected] = useState(defaultValue);
   const [triggered, setTriggered] = useState(false);
 
+  const handleClickOption = (countValue: number) => {
+    setSelected(countValue);
+    handleRowsPerPage(countValue);
+  };
   useEffect(() => {
     setTriggered(false);
   }, [selected]);
@@ -54,7 +60,7 @@ const RowCountSelector: FC<Props> = ({
             <button
               key={countValue}
               disabled={!triggered}
-              onClick={() => setSelected(countValue)}
+              onClick={() => handleClickOption(countValue)}
               className={cn(
                 "flex items-center w-full px-2.5 justify-between py-1.5 text-left hover:bg-slate-100 rounded-md"
               )}
