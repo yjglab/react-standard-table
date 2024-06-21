@@ -3,22 +3,12 @@ import { cn } from "../../utils/cn";
 import RowCountSelector from "../partials/RowCountSelector";
 
 interface Props {
-  rowsPerPage: number;
-  handleRowsPerPage: (rows: number) => void;
   className?: string;
 }
-const TableOption: FC<Props> = ({
-  rowsPerPage,
-  handleRowsPerPage,
-  className = "",
-}) => {
+const TableOption: FC<Props> = ({ className = "" }) => {
   return (
     <div className={cn("flex items-center justify-end", className)}>
-      <RowCountSelector
-        className=""
-        rowsPerPage={rowsPerPage}
-        handleRowsPerPage={handleRowsPerPage}
-      />
+      <RowCountSelector className="" />
     </div>
   );
 };

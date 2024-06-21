@@ -2,22 +2,26 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { FC } from "react";
 import { iconStyle } from "../../configs/style";
 import { cn } from "../../utils/cn";
+import { useTableStore } from "../../contexts/table.store";
 
 interface Props {
-  total: number;
-  page: number;
-  rowsPerPage: number;
-  handlePagination: (direction: "prev" | "next", dest?: number) => void;
   className?: string;
 }
 
-const Paginator: FC<Props> = ({
-  total,
-  className,
-  page,
-  rowsPerPage,
-  handlePagination,
-}) => {
+const Paginator: FC<Props> = ({ className }) => {
+  const { page, rowsPerPage, total, setPage } = useTableStore();
+  const handlePagination = (direction: "prev" | "next", dest?: number) => {
+    if (dest) {
+      setPage(dest);
+    } else {
+      if (direction === "prev" && page > 1) {
+        setPage(page - 1);
+      } else if (direction === "next" && page * rowsPerPage < total) {
+        setPage(page + 1);
+      }
+    }
+  };
+
   return (
     <div
       className={cn(
@@ -36,15 +40,16 @@ const Paginator: FC<Props> = ({
           strokeWidth={iconStyle.strokeWidth}
         />
       </button>
-      <div className="text-sm min-w-20 flex items-center">
-        <span className="min-w-12 text-center">
-          {String(total > 0 ? (page - 1) * rowsPerPage + 1 : 0).padStart(
-            String(total).length,
-            "0"
-          )}
-          -{total > page * rowsPerPage ? page * rowsPerPage : total}
+      <div className="text-sm min-w-20 flex items-center space-x-1">
+        <span className="w-6 text-center font-semibold">
+          {total > 0 ? (page - 1) * rowsPerPage + 1 : 0}
         </span>
-        of <span className="min-w-6 text-center">{total}</span>
+        <span>-</span>
+        <span className="w-6 text-center font-semibold">
+          {total > page * rowsPerPage ? page * rowsPerPage : total}
+        </span>
+        <span>of</span>
+        <span className="w-6 text-center font-semibold">{total}</span>
       </div>
       <button
         type="button"

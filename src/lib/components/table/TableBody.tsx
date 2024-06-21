@@ -7,7 +7,7 @@ interface Props {
 }
 
 const TableBody: FC<Props> = ({ children, className }) => {
-  return <div className={cn("flex flex-col", className)}>{children}</div>;
+  return <tbody className={cn("divide-y", className)}>{children}</tbody>;
 };
 
 export default TableBody;

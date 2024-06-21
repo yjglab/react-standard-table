@@ -2,28 +2,27 @@ import { FC, useEffect, useState } from "react";
 import { cn } from "../../utils/cn";
 import { Check, ChevronDown } from "lucide-react";
 import { iconStyle } from "../../configs/style";
+import { useTableStore } from "../../contexts/table.store";
 
 interface Props {
-  rowsPerPage: number;
-  handleRowsPerPage: (rows: number) => void;
   counts?: number[];
   defaultValue?: number;
   className?: string;
 }
 const RowCountSelector: FC<Props> = ({
-  rowsPerPage,
-  handleRowsPerPage,
   counts = [10, 25, 50],
-  defaultValue = rowsPerPage,
+  defaultValue = counts[0],
   className = "",
 }) => {
   const [selected, setSelected] = useState(defaultValue);
   const [triggered, setTriggered] = useState(false);
-
+  const { setPage, setRowsPerPage } = useTableStore();
   const handleClickOption = (countValue: number) => {
     setSelected(countValue);
-    handleRowsPerPage(countValue);
+    setRowsPerPage(countValue);
+    setPage(1);
   };
+
   useEffect(() => {
     setTriggered(false);
   }, [selected]);

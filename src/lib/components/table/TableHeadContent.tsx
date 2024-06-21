@@ -6,23 +6,23 @@ interface Props {
   itemAlign?: "left" | "center" | "right";
   className?: string;
 }
-const TableContent: FC<Props> = ({
+const TableHeadContent: FC<Props> = ({
   children,
   itemAlign = "left",
   className,
 }) => {
   return (
-    <td
+    <th
       className={cn(
         "min-h-6",
-        itemAlign === "left" && "justify-start",
-        itemAlign === "center" && "justify-center",
-        itemAlign === "right" && "justify-end",
+        itemAlign === "left" && "text-start",
+        itemAlign === "center" && "text-center",
+        itemAlign === "right" && "text-end",
         className
       )}
     >
       <>{children}</>
-    </td>
+    </th>
   );
 };
-export default TableContent;
+export default TableHeadContent;
